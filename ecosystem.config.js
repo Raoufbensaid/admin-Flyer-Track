@@ -1,15 +1,14 @@
 module.exports = {
   apps: [
     {
-      name: "admin-interface",
+      name: "FlyerTrack",
       script: "node_modules/next/dist/bin/next",
       args: "start",
-      cwd: "/root/admin-Flyer-Track", // chemin correct sur ton VPS
+      cwd: "D:/FlyerTrack/admin-interface",
       interpreter: "node",
-      exec_mode: "fork",
       env: {
         NODE_ENV: "production",
-        PORT: 3001,
+        PORT: "3000",
       },
     },
   ],
