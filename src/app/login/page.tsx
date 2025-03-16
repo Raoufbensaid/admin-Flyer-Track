@@ -1,32 +1,33 @@
-// pages/login.js
-import { useState, useContext } from "react";
-import { useRouter } from "next/router";
-import AuthContext from "../context/AuthContext";
+"use client";
+
+import React, { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "../layout";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const { login } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await login(email, password);
       router.push("/dashboard");
-    } catch (err) {
-      setError(err.response?.data?.message || "Erreur lors de la connexion");
+    } catch (_) {
+      setError("Erreur lors de la connexion");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto", padding: "2rem" }}>
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
       <h2>Connexion</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label>Email :</label>
+          <label>Email: </label>
           <input
             type="email"
             value={email}
@@ -35,7 +36,7 @@ export default function Login() {
           />
         </div>
         <div>
-          <label>Mot de passe :</label>
+          <label>Mot de passe: </label>
           <input
             type="password"
             value={password}

@@ -1,35 +1,34 @@
-// pages/register.js
-import { useState, useContext } from "react";
-import { useRouter } from "next/router";
-import AuthContext from "../context/AuthContext";
+"use client";
+
+import React, { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "../layout";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const { register } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await register(username, email, password);
       router.push("/dashboard");
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Erreur lors de l&apos;inscription"
-      );
+    } catch (_) {
+      setError("Erreur lors de l&apos;inscription");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto", padding: "2rem" }}>
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
       <h2>Inscription</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label>Nom d&apos;utilisateur :</label>
+          <label>Nom d&apos;utilisateur: </label>
           <input
             type="text"
             value={username}
@@ -38,7 +37,7 @@ export default function Register() {
           />
         </div>
         <div>
-          <label>Email :</label>
+          <label>Email: </label>
           <input
             type="email"
             value={email}
@@ -47,7 +46,7 @@ export default function Register() {
           />
         </div>
         <div>
-          <label>Mot de passe :</label>
+          <label>Mot de passe: </label>
           <input
             type="password"
             value={password}
