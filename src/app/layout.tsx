@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 "use client";
 
 import React, { createContext, useState, ReactNode } from "react";
@@ -19,12 +20,10 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType>({
-  user: null,
-  login: async () => {},
-  register: async () => {},
-  logout: () => {},
-});
+// Initialisation du contexte avec type explicite
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -33,17 +32,13 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (email: string, password: string) => {
-    // Simule un login ; remplace par un appel API réel
+  const login = async (email: string) => {
+    // Simule un login – remplace par ton appel API réel.
     setUser({ email, username: "DemoUser", token: "fake-token" });
   };
 
-  const register = async (
-    username: string,
-    email: string,
-    password: string
-  ) => {
-    // Simule une inscription ; remplace par un appel API réel
+  const register = async (username: string, email: string) => {
+    // Simule une inscription – remplace par ton appel API réel.
     setUser({ username, email, token: "fake-token" });
   };
 
@@ -59,7 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {

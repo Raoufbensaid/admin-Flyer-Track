@@ -1,12 +1,21 @@
+// src/app/dashboard/page.tsx
 "use client";
 
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "../layout";
+import { AuthContext, AuthContextType } from "../layout";
+
+export const metadata = {
+  title: "Dashboard - FlyerTrack",
+};
 
 export default function Dashboard() {
-  const { user, logout } = useContext(AuthContext);
   const router = useRouter();
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    throw new Error("AuthContext n’est pas disponible");
+  }
+  const { user, logout } = auth as AuthContextType;
 
   useEffect(() => {
     if (!user) {

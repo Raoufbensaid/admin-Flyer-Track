@@ -1,23 +1,33 @@
+// src/app/register/page.tsx
 "use client";
 
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "../layout";
+import { AuthContext, AuthContextType } from "../layout";
+
+export const metadata = {
+  title: "Inscription - FlyerTrack",
+};
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { register } = useContext(AuthContext);
   const router = useRouter();
+
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    throw new Error("AuthContext n’est pas disponible");
+  }
+  const { register } = auth as AuthContextType;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await register(username, email, password);
       router.push("/dashboard");
-    } catch (_) {
+    } catch {
       setError("Erreur lors de l&apos;inscription");
     }
   };

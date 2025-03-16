@@ -1,7 +1,12 @@
+// src/app/page.tsx
 "use client";
 
 import Link from "next/link";
 import React from "react";
+
+export const metadata = {
+  title: "Accueil - FlyerTrack",
+};
 
 export default function Home() {
   return (
