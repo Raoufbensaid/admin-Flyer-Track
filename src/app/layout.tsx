@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 "use client";
 
 import React, { createContext, useState, ReactNode } from "react";
@@ -11,16 +10,11 @@ export interface User {
 
 export interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    username: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
+  login: (email: string) => Promise<void>;
+  register: (username: string, email: string) => Promise<void>;
   logout: () => void;
 }
 
-// Initialisation du contexte avec type explicite
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
@@ -33,12 +27,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string) => {
-    // Simule un login – remplace par ton appel API réel.
+    // Simule un appel API
     setUser({ email, username: "DemoUser", token: "fake-token" });
   };
 
   const register = async (username: string, email: string) => {
-    // Simule une inscription – remplace par ton appel API réel.
+    // Simule un appel API
     setUser({ username, email, token: "fake-token" });
   };
 

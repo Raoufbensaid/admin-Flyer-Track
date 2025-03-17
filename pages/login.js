@@ -1,27 +1,19 @@
-// src/app/login/page.tsx
-"use client";
-
+// pages/login.js
 import React, { useState, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { AuthContext, AuthContextType } from "../layout";
-
-export const metadata = {
-  title: "Connexion - FlyerTrack",
-};
+import { useRouter } from "next/router";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const auth = useContext(AuthContext);
-  if (!auth) {
-    throw new Error("AuthContext not available");
-  }
-  const { login } = auth as AuthContextType;
+  if (!auth) throw new Error("AuthContext not available");
+  const { login } = auth;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
