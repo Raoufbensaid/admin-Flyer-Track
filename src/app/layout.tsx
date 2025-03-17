@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 "use client";
 
 import React, { createContext, useState, ReactNode } from "react";
@@ -10,8 +11,12 @@ export interface User {
 
 export interface AuthContextType {
   user: User | null;
-  login: (email: string) => Promise<void>;
-  register: (username: string, email: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  register: (
+    username: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   logout: () => void;
 }
 
@@ -26,17 +31,51 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (email: string) => {
-    // Simule un appel API
-    setUser({ email, username: "DemoUser", token: "fake-token" });
+  const login = async (email: string, password: string) => {
+    console.log("=== LOGIN FUNCTION CALLED ===");
+    console.log("Email:", email);
+    console.log("Password:", password);
+
+    try {
+      // Simule un appel API ou appelle ton backend
+      // Remplace par :
+      // const res = await axios.post('https://ton-backend.com/api/auth/login', { email, password });
+      // ...
+      // console.log('Login response:', res.data);
+
+      // Ici, on simule juste la réussite :
+      setUser({ email, username: "DemoUser", token: "fake-token" });
+    } catch (err) {
+      console.log("Erreur dans login:", err);
+      throw err; // relance l'erreur pour être capturée dans la page login
+    }
   };
 
-  const register = async (username: string, email: string) => {
-    // Simule un appel API
-    setUser({ username, email, token: "fake-token" });
+  const register = async (
+    username: string,
+    email: string,
+    password: string
+  ) => {
+    console.log("=== REGISTER FUNCTION CALLED ===");
+    console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("Password:", password);
+
+    try {
+      // Simule un appel API ou appelle ton backend
+      // const res = await axios.post('https://ton-backend.com/api/auth/register', { username, email, password });
+      // console.log('Register response:', res.data);
+
+      // On simule juste la réussite :
+      setUser({ username, email, token: "fake-token" });
+    } catch (err) {
+      console.log("Erreur dans register:", err);
+      throw err; // relance l'erreur pour être capturée dans la page register
+    }
   };
 
   const logout = () => {
+    console.log("=== LOGOUT FUNCTION CALLED ===");
     setUser(null);
   };
 

@@ -6,7 +6,9 @@ import { AuthContext } from "../context/AuthContext";
 export default function Dashboard() {
   const router = useRouter();
   const auth = useContext(AuthContext);
-  if (!auth) throw new Error("AuthContext not available");
+  if (!auth) {
+    throw new Error("AuthContext not available");
+  }
   const { user, logout } = auth;
 
   useEffect(() => {

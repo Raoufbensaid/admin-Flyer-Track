@@ -8,35 +8,57 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Vérifier s'il y a un token dans le localStorage
     const token = localStorage.getItem("token");
     if (token) {
-      // Pour simplifier, nous stockons seulement le token dans l'état.
-      // Vous pouvez appeler une API pour récupérer les infos utilisateur.
       setUser({ token });
     }
   }, []);
 
   const login = async (email, password) => {
-    // Remplacez l'URL par celle de votre backend hébergé sur Render
-    const res = await axios.post(
-      "https://backend-flyer-track.onrender.com/api/auth/login",
-      { email, password }
-    );
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
+    console.log("=== LOGIN FUNCTION CALLED ===");
+    console.log("Email:", email);
+    console.log("Password:", password);
+    try {
+      const res = await axios.post(
+        "https://backend-flyer-track.onrender.com/api/auth/login",
+        { email, password }
+      );
+      console.log("Login response:", res.data);
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user);
+    } catch (err) {
+      console.error(
+        "Erreur dans login:",
+        err.response ? err.response.data : err.message
+      );
+      throw err;
+    }
   };
 
   const register = async (username, email, password) => {
-    const res = await axios.post(
-      "https://backend-flyer-track.onrender.com/api/auth/register",
-      { username, email, password }
-    );
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
+    console.log("=== REGISTER FUNCTION CALLED ===");
+    console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("Password:", password);
+    try {
+      const res = await axios.post(
+        "https://backend-flyer-track.onrender.com/api/auth/register",
+        { username, email, password }
+      );
+      console.log("Register response:", res.data);
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user);
+    } catch (err) {
+      console.error(
+        "Erreur dans register:",
+        err.response ? err.response.data : err.message
+      );
+      throw err;
+    }
   };
 
   const logout = () => {
+    console.log("=== LOGOUT FUNCTION CALLED ===");
     localStorage.removeItem("token");
     setUser(null);
   };

@@ -15,10 +15,13 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("=== HANDLE SUBMIT LOGIN ===");
+    console.log("Email:", email, "Password:", password);
     try {
       await login(email, password);
       router.push("/dashboard");
-    } catch {
+    } catch (err) {
+      console.error("Erreur catch handleSubmit login:", err);
       setError("Erreur lors de la connexion");
     }
   };

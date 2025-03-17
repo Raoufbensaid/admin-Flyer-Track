@@ -16,11 +16,14 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("=== HANDLE SUBMIT REGISTER ===");
+    console.log("Username:", username, "Email:", email, "Password:", password);
     try {
       await register(username, email, password);
       router.push("/dashboard");
-    } catch {
-      setError("Erreur lors de l&apos;inscription");
+    } catch (err) {
+      console.error("Erreur catch handleSubmit register:", err);
+      setError("Erreur lors de l'inscription");
     }
   };
 
