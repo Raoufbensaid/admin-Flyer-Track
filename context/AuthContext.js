@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // Récupération du token depuis localStorage (pour persistance)
     const token = localStorage.getItem("token");
     if (token) {
       setUser({ token });
@@ -15,9 +16,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    console.log("=== LOGIN FUNCTION CALLED (ADMIN) ===");
+    console.log("=== ADMIN LOGIN FUNCTION CALLED ===");
     console.log("Email:", email, "Password:", password);
     try {
+      // On ajoute le paramètre ?role=admin pour forcer la vérification du rôle admin
       const res = await axios.post(
         "https://backend-flyer-track.onrender.com/api/auth/login?role=admin",
         { email, password }
@@ -27,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data.user);
     } catch (err) {
       console.error(
-        "Erreur dans login:",
+        "Erreur dans admin login:",
         err.response ? err.response.data : err.message
       );
       throw err;
@@ -35,9 +37,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (username, email, password) => {
-    console.log("=== REGISTER FUNCTION CALLED (ADMIN) ===");
+    console.log("=== ADMIN REGISTER FUNCTION CALLED ===");
     console.log("Username:", username, "Email:", email, "Password:", password);
     try {
+      // On force le rôle "admin" dans la requête d'inscription
       const res = await axios.post(
         "https://backend-flyer-track.onrender.com/api/auth/register",
         { username, email, password, role: "admin" }
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data.user);
     } catch (err) {
       console.error(
-        "Erreur dans register:",
+        "Erreur dans admin register:",
         err.response ? err.response.data : err.message
       );
       throw err;
@@ -55,7 +58,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log("=== LOGOUT FUNCTION CALLED (ADMIN) ===");
+    console.log("=== ADMIN LOGOUT FUNCTION CALLED ===");
     localStorage.removeItem("token");
     setUser(null);
   };
