@@ -1,4 +1,4 @@
-// pages/register.js
+// pages/register.js (pour interface admin)
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../context/AuthContext";
@@ -20,7 +20,7 @@ export default function Register() {
     console.log("Username:", username, "Email:", email, "Password:", password);
     try {
       await register(username, email, password);
-      router.push("/dashboard");
+      router.push("/login");
     } catch (err) {
       console.error("Erreur catch handleSubmit register:", err);
       setError("Erreur lors de l'inscription");
@@ -29,11 +29,11 @@ export default function Register() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
-      <h2>Inscription</h2>
+      <h2>Inscription Admin</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Nom d&apos;utilisateur: </label>
+          <label>Nom utilisateur: </label>
           <input
             type="text"
             value={username}
@@ -59,7 +59,7 @@ export default function Register() {
             required
           />
         </div>
-        <button type="submit">S&apos;inscrire</button>
+        <button type="submit">inscrire</button>
       </form>
     </div>
   );

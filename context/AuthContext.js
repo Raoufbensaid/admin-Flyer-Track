@@ -1,4 +1,4 @@
-// context/AuthContext.js
+// context/AuthContext.js (pour interface-admin)
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -15,12 +15,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    console.log("=== LOGIN FUNCTION CALLED ===");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    console.log("=== LOGIN FUNCTION CALLED (ADMIN) ===");
+    console.log("Email:", email, "Password:", password);
     try {
       const res = await axios.post(
-        "https://backend-flyer-track.onrender.com/api/auth/login",
+        "https://backend-flyer-track.onrender.com/api/auth/login?role=admin",
         { email, password }
       );
       console.log("Login response:", res.data);
@@ -36,14 +35,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (username, email, password) => {
-    console.log("=== REGISTER FUNCTION CALLED ===");
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
+    console.log("=== REGISTER FUNCTION CALLED (ADMIN) ===");
+    console.log("Username:", username, "Email:", email, "Password:", password);
     try {
       const res = await axios.post(
         "https://backend-flyer-track.onrender.com/api/auth/register",
-        { username, email, password }
+        { username, email, password, role: "admin" }
       );
       console.log("Register response:", res.data);
       localStorage.setItem("token", res.data.token);
@@ -58,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log("=== LOGOUT FUNCTION CALLED ===");
+    console.log("=== LOGOUT FUNCTION CALLED (ADMIN) ===");
     localStorage.removeItem("token");
     setUser(null);
   };

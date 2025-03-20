@@ -6,9 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function Dashboard() {
   const router = useRouter();
   const auth = useContext(AuthContext);
-  if (!auth) {
-    throw new Error("AuthContext not available");
-  }
+  if (!auth) throw new Error("AuthContext not available");
   const { user, logout } = auth;
 
   useEffect(() => {
@@ -21,7 +19,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
-      <h2>Dashboard</h2>
+      <h2>Dashboard Admin</h2>
       <p>Bienvenue {user.username || user.email}!</p>
       <button
         onClick={() => {

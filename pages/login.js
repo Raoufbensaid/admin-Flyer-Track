@@ -18,7 +18,8 @@ export default function Login() {
     console.log("=== HANDLE SUBMIT LOGIN ===");
     console.log("Email:", email, "Password:", password);
     try {
-      await login(email, password);
+      // Spécifie true pour isAdmin
+      await login(email, password, true);
       router.push("/dashboard");
     } catch (err) {
       console.error("Erreur catch handleSubmit login:", err);
@@ -28,7 +29,7 @@ export default function Login() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
-      <h2>Connexion</h2>
+      <h2>Connexion Admin</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
